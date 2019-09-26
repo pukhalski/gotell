@@ -148,6 +148,7 @@ func (s *Server) postComment(ctx context.Context, w http.ResponseWriter, req *ht
 			Title: &message,
 			Head:  &branch,
 			Base:  master.Name,
+			Body: strings.TrimSpace(comment.Body[0:len(comment.Body)]),
 		}
 		_, _, err = s.client.PullRequests.Create(ctx, parts[0], parts[1], pr)
 		if err != nil {
