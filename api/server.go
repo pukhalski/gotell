@@ -108,7 +108,7 @@ func (s *Server) postComment(ctx context.Context, w http.ResponseWriter, req *ht
 		fmt.Sprintf("%v-%v.json", (time.Now().UnixNano()/1000000), name),
 	)
 
-	body := comment.Author + "posted: " + comment.Body
+	body := "[" + comment.Author + "]: " + comment.Body
 	message := firstParagraph
 	if len(message) > 255 {
 		message = message[:255]
