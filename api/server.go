@@ -108,6 +108,7 @@ func (s *Server) postComment(ctx context.Context, w http.ResponseWriter, req *ht
 		fmt.Sprintf("%v-%v.json", (time.Now().UnixNano()/1000000), name),
 	)
 
+	body := comment.Name + ": " + comment.Body
 	message := firstParagraph
 	if len(message) > 255 {
 		message = message[:255]
@@ -148,7 +149,7 @@ func (s *Server) postComment(ctx context.Context, w http.ResponseWriter, req *ht
 			Title: &message,
 			Head:  &branch,
 			Base:  master.Name,
-			Body: &comment.Body,
+			Body: &body,
 		}
 		_, _, err = s.client.PullRequests.Create(ctx, parts[0], parts[1], pr)
 		if err != nil {
