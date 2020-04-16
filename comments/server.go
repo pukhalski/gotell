@@ -9,7 +9,6 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/guregu/kami"
 	"github.com/netlify/gotell/conf"
-	"github.com/rs/cors"
 )
 
 type Server struct {
@@ -38,14 +37,6 @@ func NewServer(config *conf.Configuration) *Server {
 
 	mux := kami.New()
 	mux.Get("/*path", s.serveFile)
-
-	corsHandler := cors.New(cors.Options{
-		AllowedMethods:   []string{"GET", "POST", "PATCH", "PUT", "DELETE"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
-		ExposedHeaders:   []string{"Link", "X-Total-Count"},
-		AllowCredentials: true,
-	})
-
-	s.handler = corsHandler.Handler(mux)
+	s.handler = mux
 	return s
 }
